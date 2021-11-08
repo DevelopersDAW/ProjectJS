@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function addToCart(e) {
-    //let addCart = document.getElementById("addCart");
 
     if (e.target.classList.contains("addCart")) {
         let producto = e.target;
