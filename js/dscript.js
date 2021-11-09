@@ -17,7 +17,7 @@ function addToCart(e) {
         let name = producto.parentNode.children[1].innerText;
         let price = producto.parentNode.children[2].innerText;
 
-        console.log("AÑADIDO el producto con ID: " + id);
+        console.log("\nAÑADIDO el producto con ID: " + id);
         console.log("NOMBRE: " + name);
         console.log("PRECIO: " + price);
         
@@ -27,7 +27,7 @@ function addToCart(e) {
         if(productoIgual != null){
             console.log("YA EXISTE!");
             carts[index].quantity++;
-            console.log(carts[index].quantity);
+            console.log("Cantidad aumentada a " + carts[index].quantity);
         } else {
             carts.push({
                 id: id,
@@ -36,6 +36,7 @@ function addToCart(e) {
                 quantity: 1
             });
         }
+        document.cookie = "cart=" + carts;
 
     }
 
