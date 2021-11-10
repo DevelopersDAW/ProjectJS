@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <script src="https://kit.fontawesome.com/b2c2a037fb.js" crossorigin="anonymous"></script>
-    <script src="js/dscript.js"></script>
+    <script src="js/index.js"></script>
+    <!-- <script src="js/dscript.js"></script> -->
     <style>
         input {
             outline: none;
@@ -46,38 +47,6 @@
 
     <!-- Header Section Begin -->
     <header class="header-section">
-        <div class="header-top">
-            <div class="container">
-                <div class="ht-left">
-                    <div class="mail-service">
-                        <i class=" fa fa-envelope"></i>
-                        hello.colorlib@gmail.com
-                    </div>
-                    <div class="phone-service">
-                        <i class=" fa fa-phone"></i>
-                        +65 11.188.888
-                    </div>
-                </div>
-                <div class="ht-right">
-                    <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
-                    <div class="lan-selector">
-                        <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
-                            </option>
-                            English</option>
-                            <option value='yu' data-image="img/flag-2.jpg" data-imagecss="flag yu"
-                                data-title="Bangladesh">German </option>
-                        </select>
-                    </div>
-                    <div class="top-social">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                        <a href="#"><i class="ti-linkedin"></i></a>
-                        <a href="#"><i class="ti-pinterest"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="container">
             <div class="inner-header">
                 <div class="row">
@@ -102,70 +71,38 @@
                             <li class="heart-icon">
                                 <a href="#">
                                     <i class="icon_heart_alt"></i>
-                                    <span>1</span>
+                                    <span>0</span>
                                 </a>
                             </li>
                             <li class="cart-icon">
                                 <a href="#">
                                     <i class="icon_bag_alt"></i>
-                                    <span>3</span>
+                                    <span id="allItems">0</span>
                                 </a>
-                                <div class="cart-hover">
+                                <div class="cart-hover" id="shopping-cart">
                                     <div class="select-items">
                                         <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-1.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                            <div class="number" style="display: flex;">
-                                                                <span class="minus">-</span>
-                                                                <input type="text" value="1"
-                                                                    style="width: 1.2rem; border: 0px;" />
-                                                                <span class="plus">+</span>
-                                                            </div>
-
-                                                        </div>
+                                            <thead>Shopping Cart</thead>
+                                            <tbody id="cart-articles">
+                                                <!-- <tr>
+                                                    <td>
+                                                        <h6><strong>No articles in cart :C</strong></h6>
                                                     </td>
-                                                    <td class="si-close">
-                                                        <i class="fas fa-trash" style="color: red;"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-2.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                            <div class="number" style="display: flex;">
-                                                                <span class="minus" id="minus">-</span>
-                                                                <input type="text" id="inputValue" value="1"
-                                                                    style="width: 1.7rem; border: 0px;" />
-                                                                <span class="plus" id="plus">+</span>
-
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="fas fa-trash" style="color: red;"></i>
-                                                    </td>
-                                                </tr>
+                                                </tr> -->
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="select-total">
                                         <span>total:</span>
-                                        <h5>$120.00</h5>
+                                        <h5 id="total-cart">0</h5>
                                     </div>
                                     <div class="select-button">
-                                        <a href="#" class="danger-btn view-card">EMPTY CART</a>
-                                        <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+                                        <a href="#" id="btnEmptyCart" class="danger-btn view-card">EMPTY CART</a>
+                                        <a href="#" id="btnCheckOut" class="primary-btn checkout-btn">CHECK OUT</a>
                                     </div>
                                 </div>
                             </li>
-                            <li class="cart-price">$150.00</li>
+                            <li id="totalCartNav" class="cart-price">0</li>
                         </ul>
                     </div>
                 </div>
@@ -220,11 +157,8 @@
     </header>
     <!-- Header End -->
 
-           
-
-
-    <!-- Products Banner Section Begin -->
-    <section id="productos" class="women-banner spad" style="margin-top: 5%;">
+    <!-- Women Banner Section Begin -->
+    <section id="productsWomen" class="women-banner spad mt-5">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3">
@@ -243,73 +177,102 @@
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
-                        <div id="prod1" class="product-item">
+                        <div class="product-item">
                             <div class="pi-pic">
                                 <img src="img/products/women-1.jpg" alt="">
                                 <div class="sale">Sale</div>
                                 <div class="icon">
                                     <i class="icon_heart_alt"></i>
                                 </div>
+                                <ul>
+                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                </ul>
                             </div>
                             <div class="pi-text">
                                 <div class="catagory-name">Coat</div>
-                                <h5 id="name">Pure Pineapple</h5>
-                                <div id="price" class="product-price">$14.00</div>
-
+                                <a href="#">
+                                    <h5>Pure Pineapple</h5>
+                                </a>
+                                <div class="product-price">
+                                    $14.00
+                                    <span>$35.00</span>
+                                </div>
                                 <button id="1" class="w-icon active addCart"><i class="icon_bag_alt"></i> Add to
                                     Cart</button>
-
                             </div>
                         </div>
-                        <div id="prod2" class="product-item">
+                        <div class="product-item">
                             <div class="pi-pic">
                                 <img src="img/products/women-2.jpg" alt="">
                                 <div class="icon">
                                     <i class="icon_heart_alt"></i>
                                 </div>
+                                <ul>
+                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                </ul>
                             </div>
                             <div class="pi-text">
                                 <div class="catagory-name">Shoes</div>
-                                <h5>Guangzhou sweater</h5>
-                                <div class="product-price">$13.00</div>
-
+                                <a href="#">
+                                    <h5>Guangzhou sweater</h5>
+                                </a>
+                                <div class="product-price">
+                                    $13.00
+                                </div>
                                 <button id="2" class="w-icon active addCart"><i class="icon_bag_alt"></i> Add to
                                     Cart</button>
-
                             </div>
                         </div>
-                        <div id="prod3" class="product-item">
+                        <div class="product-item">
                             <div class="pi-pic">
                                 <img src="img/products/women-3.jpg" alt="">
                                 <div class="icon">
                                     <i class="icon_heart_alt"></i>
                                 </div>
+                                <ul>
+                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                </ul>
                             </div>
                             <div class="pi-text">
                                 <div class="catagory-name">Towel</div>
-                                <h5 id="name">Pure Pineapple</h5>
-                                <div id="price" class="product-price">$34.00</div>
-
+                                <a href="#">
+                                    <h5>Pure Pineapple</h5>
+                                </a>
+                                <div class="product-price">
+                                    $34.00
+                                </div>
                                 <button id="3" class="w-icon active addCart"><i class="icon_bag_alt"></i> Add to
                                     Cart</button>
-
                             </div>
                         </div>
-                        <div id="prod4" class="product-item">
+                        <div class="product-item">
                             <div class="pi-pic">
                                 <img src="img/products/women-4.jpg" alt="">
                                 <div class="icon">
                                     <i class="icon_heart_alt"></i>
                                 </div>
+                                <ul>
+                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                </ul>
                             </div>
                             <div class="pi-text">
                                 <div class="catagory-name">Towel</div>
-                                <h5 id="name">Converse Shoes</h5>
-                                <div id="price" class="product-price">$34.00</div>
-
+                                <a href="#">
+                                    <h5>Converse Shoes</h5>
+                                </a>
+                                <div class="product-price">
+                                    $34.00
+                                </div>
                                 <button id="4" class="w-icon active addCart"><i class="icon_bag_alt"></i> Add to
                                     Cart</button>
-
                             </div>
                         </div>
                     </div>
@@ -317,9 +280,136 @@
             </div>
         </div>
     </section>
-    <!-- Products Banner Section End -->
+    <!-- Women Banner Section End -->
 
 
+    <!-- Man Banner Section Begin -->
+    <section id="productsMan" class="man-banner spad">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="filter-control">
+                        <ul>
+                            <li class="active">Clothings</li>
+                            <li>HandBag</li>
+                            <li>Shoes</li>
+                            <li>Accessories</li>
+                        </ul>
+                    </div>
+                    <div class="product-slider owl-carousel">
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <img src="img/products/man-1.jpg" alt="">
+                                <div class="sale">Sale</div>
+                                <div class="icon">
+                                    <i class="icon_heart_alt"></i>
+                                </div>
+                                <ul>
+                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="pi-text">
+                                <div class="catagory-name">Coat</div>
+                                <a href="#">
+                                    <h5>Pure Pineapple</h5>
+                                </a>
+                                <div class="product-price">
+                                    $14.00
+                                    <span>$35.00</span>
+                                </div>
+                                <button id="5" class="w-icon active addCart"><i class="icon_bag_alt"></i> Add to
+                                    Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <img src="img/products/man-2.jpg" alt="">
+                                <div class="icon">
+                                    <i class="icon_heart_alt"></i>
+                                </div>
+                                <ul>
+                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                </ul>
+
+                            </div>
+                            <div class="pi-text">
+                                <div class="catagory-name">Shoes</div>
+                                <a href="#">
+                                    <h5>Guangzhou sweater</h5>
+                                </a>
+                                <div class="product-price">
+                                    $13.00
+                                </div>
+                                <button id="6" class="w-icon active addCart"><i class="icon_bag_alt"></i> Add to
+                                    Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <img src="img/products/man-3.jpg" alt="">
+                                <div class="icon">
+                                    <i class="icon_heart_alt"></i>
+                                </div>
+                                <ul>
+                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                </ul>
+
+                            </div>
+                            <div class="pi-text">
+                                <div class="catagory-name">Towel</div>
+                                <a href="#">
+                                    <h5>Pure Pineapple</h5>
+                                </a>
+                                <div class="product-price">
+                                    $34.00
+                                </div>
+                                <button id="7" class="w-icon active addCart"><i class="icon_bag_alt"></i> Add to
+                                    Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <img src="img/products/man-4.jpg" alt="">
+                                <div class="icon">
+                                    <i class="icon_heart_alt"></i>
+                                </div>
+                                <ul>
+                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                </ul>
+
+                            </div>
+                            <div class="pi-text">
+                                <div class="catagory-name">Towel</div>
+                                <a href="#">
+                                    <h5>Converse Shoes</h5>
+                                </a>
+                                <div class="product-price">
+                                    $34.00
+                                </div>
+                                <button id="8" class="w-icon active addCart"><i class="icon_bag_alt"></i> Add to
+                                    Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1">
+                    <div class="product-large set-bg m-large" data-setbg="img/products/man-large.jpg">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Man Banner Section End -->
 
     <br>
 
