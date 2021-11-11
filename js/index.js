@@ -15,13 +15,12 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     document.getElementById("productsWomen").addEventListener("click", addToCart);
     document.getElementById("productsMan").addEventListener("click", addToCart);
+    document.getElementById("btnEmptyCart").addEventListener("click", emptyCart);
 });
 
 function shoppingCart(e) {
     if (e.target.classList.contains("plus")) {
         let id = e.target.parentNode.children[1].id;
-        // e.target.parentNode.children[1].value++;
-        // e.target.parentNode.parentNode.getElementsByClassName("quantity")[0].innerText = e.target.parentNode.children[1].value;
         let productoIgual = carts.find(element => element.id == id);
         let index = carts.indexOf(productoIgual);
         carts[index].quantity++;
@@ -35,7 +34,11 @@ function shoppingCart(e) {
         }
     }
     if (e.target.classList.contains("trash")) {
-        e.target.parentNode.parentNode.remove();
+        // e.target.parentNode.parentNode.remove();
+        let id = e.target.parentNode.parentNode.children[1].children[0].children[2].children[1].id;
+        let productoIgual = carts.find(element => element.id == id);
+        let index = carts.indexOf(productoIgual);
+        carts.splice(index, 1);
     }
     updateCart();
 }
@@ -47,7 +50,7 @@ function addToCart(e) {
         let id = producto.id;
         let name = producto.parentNode.children[1].innerText;
         let price = producto.parentNode.children[2].innerText;
-        price =     price.replace("$", "");
+        price = price.replace("$", "");
         let img = e.target.parentNode.parentNode.children[0].children[0].src;
 
         let productoIgual = carts.find(element => element.id == id);
@@ -64,7 +67,6 @@ function addToCart(e) {
                 img: img
             });
         }
-        console.log(carts);
         updateCart();
     }
 }
@@ -89,15 +91,29 @@ function updateCart() {
                 </div>
             </td>
             <td class="si-close">
-                <i class="fas fa-trash trash" style="color: red;"></i>
+                <i class="fas fa-trash trash"   style="color: red;"></i>
             </td>
             `;
         shoppingCart.append(tr);
-        console.log(item.price);
+        // console.log(item.price);
         totalPrice += item.price * item.quantity;
     });
+    if (carts.length == 0) {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
+        <td>
+        <h6><strong>No articles in your cart :C</strong></h6>
+    </td>
+        `;
+        shoppingCart.append(tr);
+    }
     document.getElementById("total-cart").innerText = "$ " + totalPrice;
     document.getElementById("totalCartNav").innerText = "$ " + totalPrice;
     document.getElementById("allItems").innerText = carts.length;
     // console.log(carts);
+}
+
+function emptyCart() {
+    carts = [];
+    updateCart();
 }
