@@ -7,7 +7,6 @@ window.addEventListener('DOMContentLoaded', function () {
         updateCart();
     }
     document.getElementById("shopping-cart").addEventListener("click", shoppingCart);
-
     document.getElementById("productsWomen").addEventListener("click", addToCart);
     document.getElementById("productsMan").addEventListener("click", addToCart);
     document.getElementById("btnEmptyCart").addEventListener("click", emptyCart);
@@ -18,24 +17,24 @@ function shoppingCart(e) {
 
     if (e.target.classList.contains("plus")) {
         let id = e.target.parentNode.children[1].id;
-        let index = findProduct();
+        let index = findProduct(id);
+        console.log(index);
         carts[index].quantity++;
         ArrayToString();
     }
     if (e.target.classList.contains("minus")) {
         let id = e.target.parentNode.children[1].id;
         if (e.target.parentNode.children[1].value > 1) {
-            let index = findProduct();
+            let index = findProduct(id);
+            console.log(index);
             carts[index].quantity--;
             ArrayToString();
         }
     }
     if (e.target.classList.contains("trash")) {
-        // e.target.parentNode.parentNode.remove();
         let id = e.target.parentNode.parentNode.children[1].children[0].children[2].children[1].id;
-        let productoIgual = carts.find(element => element.id == id);
-        let index = carts.indexOf(productoIgual);
-        carts.splice(index, 1);
+        let index = findProduct(id);
+        carts.splice(index, 1); 
         ArrayToString();
     }
     updateCart();
@@ -96,8 +95,8 @@ function updateCart() {
                 <i class="fas fa-trash trash"   style="color: red;"></i>
             </td>
             `;
-        console.log(shoppingCartTable);
-        console.log(tr);
+        // console.log(shoppingCartTable);
+        // console.log(tr);
 
         shoppingCartTable.appendChild(tr);
         totalPrice += item.price * item.quantity;
@@ -123,7 +122,7 @@ function emptyCart() {
 }
 
 function generatePopup() {
-    window.open("../popup.html", null, "height=600,width=600");
+    window.open("../popup.html", null, "height=720,width=1280");
 }
 
 function getCookie(name) {
@@ -136,7 +135,7 @@ function ArrayToString() {
     document.cookie = "cart=" + jsonStringCart;
 }
 
-function findProduct() {
+function findProduct(id) {
     let productoIgual = carts.find(element => element.id == id);
     return carts.indexOf(productoIgual);
 }
