@@ -9,13 +9,14 @@ window.addEventListener('DOMContentLoaded', function () {
         tr.innerHTML = `
         <td>
         <h6><strong>No articles in your cart :C</strong></h6>
-    </td>
+        </td>
         `;
         shoppingCart.append(tr);
     }
     document.getElementById("productsWomen").addEventListener("click", addToCart);
     document.getElementById("productsMan").addEventListener("click", addToCart);
     document.getElementById("btnEmptyCart").addEventListener("click", emptyCart);
+    document.getElementById("btnCheckOut").addEventListener("click",generatePopup)
 });
 
 function shoppingCart(e) {
@@ -24,6 +25,7 @@ function shoppingCart(e) {
         let productoIgual = carts.find(element => element.id == id);
         let index = carts.indexOf(productoIgual);
         carts[index].quantity++;
+        ArrayToString();
     }
     if (e.target.classList.contains("minus")) {
         let id = e.target.parentNode.children[1].id;
@@ -31,6 +33,7 @@ function shoppingCart(e) {
             let productoIgual = carts.find(element => element.id == id);
             let index = carts.indexOf(productoIgual);
             carts[index].quantity--;
+            ArrayToString();
         }
     }
     if (e.target.classList.contains("trash")) {
@@ -39,6 +42,7 @@ function shoppingCart(e) {
         let productoIgual = carts.find(element => element.id == id);
         let index = carts.indexOf(productoIgual);
         carts.splice(index, 1);
+        ArrayToString();
     }
     updateCart();
 }
@@ -67,7 +71,7 @@ function addToCart(e) {
                 img: img
             });
         }
-        
+        ArrayToString();
         updateCart();
     }
 }
@@ -117,4 +121,18 @@ function updateCart() {
 function emptyCart() {
     carts = [];
     updateCart();
+}
+
+function generatePopup(){
+    let popup = window.open("../popup.html", null, "height=600,width=600");
+}
+
+function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) return match[2];
+}
+
+function ArrayToString(){
+    let jsonStringCart = JSON.stringify(carts);
+    document.cookie = "cart=" + jsonStringCart;
 }
