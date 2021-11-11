@@ -24,8 +24,6 @@ function shoppingCart(e) {
         let productoIgual = carts.find(element => element.id == id);
         let index = carts.indexOf(productoIgual);
         carts[index].quantity++;
-
-        convertArrayToCookie();
     }
     if (e.target.classList.contains("minus")) {
         let id = e.target.parentNode.children[1].id;
@@ -33,8 +31,6 @@ function shoppingCart(e) {
             let productoIgual = carts.find(element => element.id == id);
             let index = carts.indexOf(productoIgual);
             carts[index].quantity--;
-
-            convertArrayToCookie();
         }
     }
     if (e.target.classList.contains("trash")) {
@@ -43,8 +39,6 @@ function shoppingCart(e) {
         let productoIgual = carts.find(element => element.id == id);
         let index = carts.indexOf(productoIgual);
         carts.splice(index, 1);
-
-        convertArrayToCookie();
     }
     updateCart();
 }
@@ -73,17 +67,15 @@ function addToCart(e) {
                 img: img
             });
         }
-        convertArrayToCookie();
+        
         updateCart();
     }
 }
 
 function updateCart() {
-    let jsonStringCart = getCookie('cart');
-    let cartArray = JSON.parse(jsonStringCart);
     shoppingCart.innerHTML = "";
     let totalPrice = 0;
-    cartArray.forEach(function (item) {
+    carts.forEach(function (item) {
         let tr = document.createElement("tr");
         tr.innerHTML = `
             <td class="si-pic"><img src="${item.img}" alt="" height="75"></td>
@@ -124,16 +116,5 @@ function updateCart() {
 
 function emptyCart() {
     carts = [];
-    convertArrayToCookie();
     updateCart();
-}
-
-function getCookie(name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    if (match) return match[2];
-}
-
-function convertArrayToCookie() {
-    let jsonStringCart = JSON.stringify(carts);
-    document.cookie = "cart=" + jsonStringCart;
 }
