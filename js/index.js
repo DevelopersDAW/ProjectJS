@@ -18,16 +18,14 @@ function shoppingCart(e) {
 
     if (e.target.classList.contains("plus")) {
         let id = e.target.parentNode.children[1].id;
-        let productoIgual = carts.find(element => element.id == id);
-        let index = carts.indexOf(productoIgual);
+        let index = findProduct();
         carts[index].quantity++;
         ArrayToString();
     }
     if (e.target.classList.contains("minus")) {
         let id = e.target.parentNode.children[1].id;
         if (e.target.parentNode.children[1].value > 1) {
-            let productoIgual = carts.find(element => element.id == id);
-            let index = carts.indexOf(productoIgual);
+            let index = findProduct();
             carts[index].quantity--;
             ArrayToString();
         }
@@ -136,4 +134,9 @@ function getCookie(name) {
 function ArrayToString() {
     let jsonStringCart = JSON.stringify(carts);
     document.cookie = "cart=" + jsonStringCart;
+}
+
+function findProduct() {
+    let productoIgual = carts.find(element => element.id == id);
+    return carts.indexOf(productoIgual);
 }

@@ -1,7 +1,6 @@
 var totalPrice = 0;
 window.addEventListener('DOMContentLoaded', function () {
     let produts = document.getElementById("products");
-    
     chargeDate();
 
     let jsonStringCart = getCookie('cart');
@@ -27,7 +26,7 @@ window.addEventListener('DOMContentLoaded', function () {
         <td><b>Total</b></td>
         <td><b>${totalPrice} $</b></td>
     `;
-    produts.append(tr);
+    produts.appendChild(tr);
 
     document.getElementById("btnPrint").addEventListener("click", printTicket);
     document.getElementById("btnCancel").addEventListener("click", closePopup);
@@ -58,6 +57,8 @@ function printTicket () {
     
     cartArray = [];
     ArrayToString(cartArray);
+
+    window.opener.updateCart();
 }
 
 function closePopup (){
