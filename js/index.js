@@ -1,25 +1,21 @@
 var carts = [];
-var shoppingCart;
+var shoppingCartTable;
 
 window.addEventListener('DOMContentLoaded', function () {
-    document.getElementById("shopping-cart").addEventListener("click", shoppingCart);
-    shoppingCart = document.getElementById("cart-articles");
-    if (carts.length == 0) {
-        let tr = document.createElement("tr");
-        tr.innerHTML = `
-        <td>
-        <h6><strong>No articles in your cart :C</strong></h6>
-        </td>
-        `;
-        shoppingCart.append(tr);
+    shoppingCartTable = document.getElementById("cart-articles");
+    if (getCookie("cart")) {
+        updateCart();
     }
+    document.getElementById("shopping-cart").addEventListener("click", shoppingCart);
+
     document.getElementById("productsWomen").addEventListener("click", addToCart);
     document.getElementById("productsMan").addEventListener("click", addToCart);
     document.getElementById("btnEmptyCart").addEventListener("click", emptyCart);
-    document.getElementById("btnCheckOut").addEventListener("click",generatePopup)
+    document.getElementById("btnCheckOut").addEventListener("click", generatePopup);
 });
 
 function shoppingCart(e) {
+
     if (e.target.classList.contains("plus")) {
         let id = e.target.parentNode.children[1].id;
         let productoIgual = carts.find(element => element.id == id);
@@ -77,9 +73,12 @@ function addToCart(e) {
 }
 
 function updateCart() {
-    shoppingCart.innerHTML = "";
+    let jsonStringCart = getCookie('cart');
+    let cartArray = JSON.parse(jsonStringCart);
+
+    shoppingCartTable.innerHTML = "";
     let totalPrice = 0;
-    carts.forEach(function (item) {
+    cartArray.forEach(function (item) {
         let tr = document.createElement("tr");
         tr.innerHTML = `
             <td class="si-pic"><img src="${item.img}" alt="" height="75"></td>
@@ -99,22 +98,24 @@ function updateCart() {
                 <i class="fas fa-trash trash"   style="color: red;"></i>
             </td>
             `;
-        shoppingCart.append(tr);
-        // console.log(item.price);
+        console.log(shoppingCartTable);
+        console.log(tr);
+
+        shoppingCartTable.appendChild(tr);
         totalPrice += item.price * item.quantity;
     });
-    if (carts.length == 0) {
+    if (cartArray.length == 0) {
         let tr = document.createElement("tr");
         tr.innerHTML = `
         <td>
         <h6><strong>No articles in your cart :C</strong></h6>
     </td>
         `;
-        shoppingCart.append(tr);
+        shoppingCartTable.appendChild(tr);
     }
     document.getElementById("total-cart").innerText = "$ " + totalPrice;
     document.getElementById("totalCartNav").innerText = "$ " + totalPrice;
-    document.getElementById("allItems").innerText = carts.length;
+    document.getElementById("allItems").innerText = cartArray.length;
     // console.log(carts);
 }
 
@@ -123,7 +124,7 @@ function emptyCart() {
     updateCart();
 }
 
-function generatePopup(){
+function generatePopup() {
     window.open("../popup.html", null, "height=600,width=600");
 }
 
@@ -132,7 +133,7 @@ function getCookie(name) {
     if (match) return match[2];
 }
 
-function ArrayToString(){
+function ArrayToString() {
     let jsonStringCart = JSON.stringify(carts);
     document.cookie = "cart=" + jsonStringCart;
 }
