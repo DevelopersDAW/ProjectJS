@@ -124,7 +124,7 @@ function emptyCart() {
 }
 
 function generatePopup(){
-    let popup = window.open("../popup.html", null, "height=600,width=600");
+    window.open("../popup.html", null, "height=600,width=600");
 }
 
 function getCookie(name) {
