@@ -52,10 +52,10 @@ function chargeDate() {
     let date = new Date();
     let month = date.toLocaleString("default", { month: 'long' });
     let dayName = date.toLocaleString("default", { weekday: 'long' });
-    let day = date.getDay();
+    let day = date.getDate();
     let year = date.getFullYear();
 
-    dateDiv.innerText = `${dayName} dia ${day}, de/d’${month} del ${year}`;
+    dateDiv.innerText = `${dayName} dia ${day}, de ${month} del ${year}`;
 }
 
 function printTicket() {

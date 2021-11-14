@@ -24,7 +24,6 @@ function shoppingCart(e) {
     if (e.target.classList.contains("plus")) {
         let id = e.target.parentNode.children[1].id;
         let index = findProduct(id);
-        // console.log(index);
         cart[index].quantity++;
         ArrayToString();
     }
@@ -76,11 +75,9 @@ function addToCart(e) {
 }
 
 function updateCart() {
-    // let jsonStringCart = getCookie('cart');
-    // console.log(jsonStringCart);
-    // console.log(document.cookie);
-    // let cartArray = JSON.parse(jsonStringCart);
-    let cartArray = cart;
+    let jsonStringCart = getCookie('cart');
+    let cartArray = JSON.parse(jsonStringCart);
+
     shoppingCartTable.innerHTML = "";
     let totalPrice = 0;
     cartArray.forEach(function (item) {
@@ -140,7 +137,6 @@ function getCookie(name) {
 
 function ArrayToString() {
     let jsonStringCart = JSON.stringify(cart);
-
     document.cookie = "cart=" + jsonStringCart;
 
 }
