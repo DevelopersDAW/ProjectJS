@@ -1,4 +1,4 @@
-var carts = [];
+var cart = [];
 var shoppingCartTable;
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -11,15 +11,21 @@ window.addEventListener('DOMContentLoaded', function () {
     document.getElementById("productsMan").addEventListener("click", addToCart);
     document.getElementById("btnEmptyCart").addEventListener("click", emptyCart);
     document.getElementById("btnCheckOut").addEventListener("click", generatePopup);
+
+    document.cookie = "cookiename=cookievalue";
+
+    var x = document.cookie;
+
+    console.log("cookie: " + x);
+
 });
 
 function shoppingCart(e) {
-
     if (e.target.classList.contains("plus")) {
         let id = e.target.parentNode.children[1].id;
         let index = findProduct(id);
-        console.log(index);
-        carts[index].quantity++;
+        // console.log(index);
+        cart[index].quantity++;
         ArrayToString();
     }
     if (e.target.classList.contains("minus")) {
@@ -27,14 +33,14 @@ function shoppingCart(e) {
         if (e.target.parentNode.children[1].value > 1) {
             let index = findProduct(id);
             console.log(index);
-            carts[index].quantity--;
+            cart[index].quantity--;
             ArrayToString();
         }
     }
     if (e.target.classList.contains("trash")) {
         let id = e.target.parentNode.parentNode.children[1].children[0].children[2].children[1].id;
         let index = findProduct(id);
-        carts.splice(index, 1); 
+        cart.splice(index, 1);
         ArrayToString();
     }
     updateCart();
@@ -50,13 +56,13 @@ function addToCart(e) {
         price = price.replace("$", "");
         let img = e.target.parentNode.parentNode.children[0].children[0].src;
 
-        let productoIgual = carts.find(element => element.id == id);
-        let index = carts.indexOf(productoIgual);
+        let productoIgual = cart.find(element => element.id == id);
+        let index = cart.indexOf(productoIgual);
 
         if (productoIgual != null) {
-            carts[index].quantity++;
+            cart[index].quantity++;
         } else {
-            carts.push({
+            cart.push({
                 id: id,
                 name: name,
                 price: price,
@@ -70,9 +76,11 @@ function addToCart(e) {
 }
 
 function updateCart() {
-    let jsonStringCart = getCookie('cart');
-    let cartArray = JSON.parse(jsonStringCart);
-
+    // let jsonStringCart = getCookie('cart');
+    // console.log(jsonStringCart);
+    // console.log(document.cookie);
+    // let cartArray = JSON.parse(jsonStringCart);
+    let cartArray = cart;
     shoppingCartTable.innerHTML = "";
     let totalPrice = 0;
     cartArray.forEach(function (item) {
@@ -95,9 +103,6 @@ function updateCart() {
                 <i class="fas fa-trash trash"   style="color: red;"></i>
             </td>
             `;
-        // console.log(shoppingCartTable);
-        // console.log(tr);
-
         shoppingCartTable.appendChild(tr);
         totalPrice += item.price * item.quantity;
     });
@@ -106,23 +111,26 @@ function updateCart() {
         tr.innerHTML = `
         <td>
         <h6><strong>No articles in your cart :C</strong></h6>
-    </td>
+        </td>
         `;
         shoppingCartTable.appendChild(tr);
     }
     document.getElementById("total-cart").innerText = "$ " + totalPrice;
     document.getElementById("totalCartNav").innerText = "$ " + totalPrice;
     document.getElementById("allItems").innerText = cartArray.length;
-    // console.log(carts);
+    // console.log(document.cookie);
+    ArrayToString();
+    console.log("Leyendo cookie" + document.cookie);
+    // console.log(cart);
 }
 
 function emptyCart() {
-    carts = [];
+    cart = [];
     updateCart();
 }
 
 function generatePopup() {
-    window.open("../popup.html", null, "height=720,width=1280");
+    window.open("popup.html", null, "width=1280,height=720");
 }
 
 function getCookie(name) {
@@ -131,11 +139,13 @@ function getCookie(name) {
 }
 
 function ArrayToString() {
-    let jsonStringCart = JSON.stringify(carts);
+    let jsonStringCart = JSON.stringify(cart);
+
     document.cookie = "cart=" + jsonStringCart;
+
 }
 
 function findProduct(id) {
-    let productoIgual = carts.find(element => element.id == id);
-    return carts.indexOf(productoIgual);
+    let productoIgual = cart.find(element => element.id == id);
+    return cart.indexOf(productoIgual);
 }
