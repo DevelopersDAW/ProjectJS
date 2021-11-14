@@ -1,0 +1,1 @@
+Fichero styles.css, desde la línea 483 hasta 538, están los estilos explicados para el hover del carro
